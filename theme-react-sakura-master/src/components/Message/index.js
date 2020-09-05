@@ -1,0 +1,212 @@
+import { Icon, Button ,message,Modal,List,Avatar,Skeleton } from 'antd';
+import reqwest from 'reqwest';
+import {MessageWrapper} from "./style";
+import React, {PureComponent} from "react";
+import moment from "moment"
+import axios from "axios";
+import {getAvatar, setAvatar, setToken,removeToken,removeAvatar,getToken} from '../../lib/auth';
+import MessagePage from '../MessagePage';
+
+const count = 3;
+
+
+class Message extends React.Component {
+
+	constructor(props) {
+        super(props);
+        
+		  this.state = {
+			initLoading: true,
+			loading: true,
+			finished: false,
+			page: 1,
+			notReadNum : '',
+			
+			list : [],
+		  };
+        this.getComment = this.getComment.bind(this);
+    }
+
+
+		
+	componentDidMount() {
+		this.getComment(1, true);
+	  }
+
+
+
+	  getComment(page,override) {
+		this.setState({loading: true});
+        axios.get('/auth/getUserComment', {
+            params: {
+                pageNum: page,
+                pageSize: 5
+            }
+        }).then((res) => {
+            if (res.success === 1) {
+				let current = res.pageInfo.page * res.pageInfo.size;
+                let total = res.pageInfo.total;
+				const data = res.models;
+				let arr = [];
+				 for (let i = 0; i < data.length; i++) {
+                    arr.push({
+                        id: data[i].id,
+                        postsId: data[i].postsId,
+                        postsTitle: data[i].postsTitle,
+                        authorAvatar: data[i].authorAvatar,
+                        authorName: data[i].authorName,
+                        pid: data[i].pid,
+                        isRead : data[i].isRead,
+                    })
+                }
+				this.setState((prevState) =>{
+					return {
+						initLoading: false,
+						list: override ? arr : [...prevState.list, ...arr],
+						page: page + 1,
+                        loading: false,
+						notReadNum: res.extra,
+					}
+					
+				  });
+				    if (current > total) {
+                    this.setState({
+                        finished: true
+                    })
+                }
+            }
+        });
+    }
+
+	 
+	readOneComment = (id) =>{
+		
+		axios.get('/auth/readThisMsg', {
+            params: {
+               id : id,
+            }
+        }).then((res) =>{
+			if(res.success === 1)
+			{
+				
+				this.closeMessageModal();
+
+			}
+        })
+	}
+	
+   closeMessageModal = () =>{
+	this.props.closeMessageModal();
+  }
+
+ 
+ 
+
+  render() {
+    const { initLoading, loading, list,page,finished, notReadNum} = this.state;
+	 const loadMore =
+      !initLoading && !loading ? (
+        <div
+          style={{
+            textAlign: 'center',
+            marginTop: 12,
+            height: 12,
+            lineHeight: '10px',
+          }}
+        >
+	<MessagePage
+                    page={page}
+                    finished={finished}
+                    loading={loading}
+                    getList={this.getComment}
+                />
+	</div>
+		):null;
+		
+    return (
+	<MessageWrapper>
+       <List
+        className="demo-loadmore-list"
+		header = {<div>
+					<span className="msgIsReadNum">未读消息:{notReadNum}</span>
+				</div>}
+        loading={initLoading}
+        itemLayout="horizontal"
+        loadMore={loadMore}
+        dataSource={list}
+        renderItem={item => (
+          <List.Item
+            actions={[<a key="list-loadmore-edit" onClick ={ e =>{
+				e.preventDefault();
+			if(item.isRead === false)
+			{
+				this.readOneComment(item.id);
+			}
+			if(item.postsId === 10000)
+			{
+				window.location.href = '/message#p'+item.id;
+			}
+			else if(item.postsId === 10001)
+			{
+				window.location.href = '/books#p'+item.id;
+			}
+			else if(item.postsId === 10002)
+			{
+				window.location.href = '/anime#p'+item.id;
+			}
+			else if(item.postsId === 10003)
+			{
+				window.location.href = '/manga#p'+item.id;
+			}
+			else if(item.postsId === 10004)
+			{
+				window.location.href='/music#p'+item.id;
+			}
+			else if(item.postsId === 10005){
+				window.location.href='/links#p'+item.id;
+			}
+			else{
+				window.location.href = '/article/'+item.postsId+'#p'+item.id;
+			 }
+            }
+				}>回复</a>]}
+			
+          >
+            <Skeleton avatar title={false} loading={loading} active>
+              <List.Item.Meta
+			  	avatar={
+					<img src={item.authorAvatar} alt=""/>
+				  }
+                title={
+					 item.pid === 0 ? (<a className="msgPerson" style={{color: "blue"}}>{item.authorName}</a>)
+							: ( item.authorName === "LhanMan" ?(<a className="msgPerson" style={{color: "red"}}>{item.authorName}</a>)
+										:(<a className="msgPerson" style={{color: "blue"}}>{item.authorName}</a>))
+					}
+
+                description={
+				item.isRead===true ? (item.pid === 0 ? (<div><span className="msgTypeRead" >评论</span> 
+													<span className="msgHead">评论了你的博文<a>{item.postsTitle}</a></span>
+													</div>)
+							: (<div><span className="msgTypeRead" >评论</span>
+								<span className="msgHead">在<a>{item.postsTitle}</a>回复了你的评论</span>
+								</div>))
+					: (item.pid === 0 ? (<div><span className="msgType" >评论</span> 
+											<span className="msgHead">评论了你的博文:<a>{item.postsTitle}</a></span>
+											</div>)
+							:(<div><span className="msgType" >评论</span> 
+										<span className="msgHead">在<a>{item.postsTitle}</a>回复了你的评论</span>
+										</div>))
+				
+					
+                }
+              />
+            </Skeleton>
+          </List.Item>
+        )}
+      />
+	</MessageWrapper>
+    );
+  }
+}
+
+export default Message;

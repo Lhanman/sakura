@@ -1,0 +1,210 @@
+/* eslint-disable no-await-in-loop */
+
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import _BotUI from 'botui';
+
+import 'botui/build/botui-theme-default.css';
+import 'botui/build/botui.min.css';
+
+class BotUI extends Component {
+  async componentDidMount() {
+    this.botui = new _BotUI('botui-app');
+
+    const { messages, action, onAction } = this.props;
+
+    for (let i = 0; i < messages.length; i++) {
+
+      await this.botui.message.add({
+		  content : messages[i].content,
+		  delay : 1000,
+		  loading : true,
+	  
+	  });
+    }
+
+    if (action) {
+      this.botui.action[action[0].type]({
+        action: action[0].action,
+      }).then(onAction[0].handler);
+    }
+  }
+
+  async componentDidUpdate() {
+    const { messages, action, onAction } = this.props;
+
+    // delete when over length
+    while (await this.botui.message.get(messages.length)) {
+      await this.botui.message.remove(messages.length);
+    }
+
+    // update when changed and insert when added
+    for (let i = 0; i < messages.length; i++) {
+      const oldMessage = await this.botui.message.get(i);
+      const newMessage = messages[i];
+
+      if (oldMessage) {
+        if (
+          !(
+            oldMessage.type === newMessage.type &&
+            oldMessage.human === newMessage.human &&
+            oldMessage.content === newMessage.content
+          )
+        ) {
+          await this.botui.message.update(i, newMessage);
+        }
+      } else {
+        await this.botui.message.add(newMessage);
+      }
+
+		
+    }
+	
+	for (let i = 0; i < action.length; i++) {
+	  if (action) {
+		  this.botui.action[action[i].type]({
+			addMessage: false,
+			action: action[i].action,
+		  }).then(onAction[i].handler);
+		}
+
+	}
+
+    
+  }
+
+  render() {
+    const { className, messages, action, onAction, ...otherProps } = this.props;
+    const classNames = ['botui-app-container'];
+
+    if (className) {
+      classNames.push(className);
+    }
+
+    return (
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      <div className={classNames.join(' ')} id="botui-app" {...otherProps}>
+        <bot-ui />
+
+		 <div>
+					 <p className='justP'>
+							</p>
+				   <p className='justP'>
+						<span style={{"color": "#339966"}}>
+							<del title='你知道的也太多了吧= ='>
+								本人擅长 Ai、Fw、Fl、Br、Ae、Pr、Id、Ps 等软件的安装与卸载，
+								精通 CSS、Javascript、PHP、ASP、C、C＋＋、C#、Java、Ruby、Perl、Lisp、python、Objective-C、Actionscr ipt、Pascal 等单词的拼写，
+								熟悉 Windows、Linux、Mac、Android、IOS、WP8 等系统的开关机....
+							</del>
+						</span>
+				   </p>
+
+				   <p className='justP'>
+				   </p>
+				   
+				   <h3>
+						初衷
+				   </h3>
+
+					   <p className='justP'>
+								本博客可以说是一时兴起才做的也是为了巩固下刚学的Spring Boot的知识，原本只是单纯的想做个简单一点的,起码能用markdown写写博客啥的功能就足够了,
+							用来记录我学习的历程和归纳一些知识，这样就不需要在浏览器的收藏夹收藏这么多网站了😂
+						   	但做到后面,在网上冲浪的时候,看到各路大神的博客秀的我头皮发麻，才发现我的博客怎么<del title='你知道的也太多了吧= ='>tmd</del>这么丑😭,
+						   	这不禁让我产生想做这样的博客。
+					   </p>
+					<p className='justP'>
+					</p>
+				
+					<h3>
+						寻找到心仪的主题
+					</h3>
+
+						<p className='justP'>
+								在各路大神的博客,我个人而言,我觉得Mashiro的博客最让我怦然心跳,他的项目虽然开源了,奈何他用的是WordPress框架进行搭建的
+							,这个是基于php的博客框架。我的初衷是自己动手写后端代码,所以并没有直接改用WordPress来搭建我的博客。<del title='嘿嘿嘿'>而且我也不会(●'◡'●)</del>
+							
+						</p>
+					<h3>
+						偶遇命中注定的那一半
+					</h3>
+							<p className='justP'>
+									在某次查CSDN的时候,无意间发现有个标题是:基于SpringBoot+React的blog(个人博客),点进去一看,发现他前端主题居然是Sakura,也就是Mashiro的前端主题,
+								这不禁燃起我的博客梦。他的前端用的是React,对于我这个小小后端来说,就是一个大千世界,我也就只懂Bootstrap模板什么的了。我已经预知到前端之路,
+								它不远了。😭
+							</p>
+
+					<h3>
+						开始向全栈工程师进击
+					</h3>
+						
+						<p className='justP'>
+								我遇到的那一半,她是来自<a href="https://www.plumemo.com/" target='_blank'>Plumemo</a>的其中一个主题。之后就是自学React基础的历程,去官网看看文档稍微
+							能应付一下就可以了(伪)。当去看主题的React源代码后发现根本没那么简单,没几个东西看的懂得,只好自己摸索每个代码的含义,这样才能在此基础上扩展!
+						</p>
+					<h3>
+						开发属于自己的博客
+					</h3>
+						<p className='justP'>
+								这个开源主题含有的页面并不是很多,就只有基本的首页,分类,归档,友人帐和标签墙的页面。🔨完这些页面之后,我就开始用我浅薄的前端知识,添加了
+							我想要页面。我在此主题的基础上添加了用户登录注册页面,留言板,关于,清单的番剧,漫画,书单页面,并改进了评论页面，这些页面都是参考了Mashiro以及
+							Spirit的页面,并添加属于自己的东西
+						</p>
+
+					<h3>
+						回顾以往
+					</h3>
+						<p className='justP'>
+								博客是在疫情期间宅在家里做的,不知不觉中,从原来的Bootstrap一步一步的完成功能实现了简单的博客,到发现到Sakura主题并开始React之路,这其中虽然有过懊恼,也有过
+							想放弃的念头,但是<del title='你知道的太多了O(∩_∩)O'>Mr'son tian说过</del>好事多磨。慢慢来就行！
+						</p>
+					
+					<h3>
+						关于联系方式
+					</h3>
+
+						<p className='justP'>
+								现在即时通讯发达,虽然可以用微信啥的,但是我认为发电子邮件更好,因为它可以让大多数人在发送邮箱之前能够有足够的思考时间,并且邮件对于大多数人
+							来说有种正式感,让人不得不认真的对待它,所以我希望通过邮件来接收重要讯息。
+						</p>
+						
+						<p className='justP'>
+						<strong>联系我</strong> (Emaily📧):&nbsp;&nbsp;
+							<code>dWJoamtoQHFxLmNvbQ0K</code>&nbsp;
+							(Base64)
+						</p>
+						<p className='justP'>
+						</p>
+					
+					<p className='justP'>
+						<strong>声明：</strong>
+						<del>
+						<span style={{'fontSize':'15px'}}>
+						
+						本人在此发布博文（包括但不限于汉字、拼音、阿拉伯字母 、图片、影像，以及前述之各种任意组合等等）均为随意敲击键盘所出，
+						用于检验本人电脑键盘录入、屏幕显示的机械、光电性能，并不代表本人观点。如需要详查请直接与键盘发明者及生产厂商法人代表联系。
+						</span>
+						</del>
+						<span className='emotion-inline emotion-item' style={{'marginLeft':'0px','marginRight':'0px'}}>
+						<img src="https://cdn.jsdelivr.net/gh/moezx/cdn@2.9.4/img/bili/doge.png" className='img' style={{'animationTimingFunction': 'steps(20)','animationDuration':'800ms','transform': 'translateY(-608px)','height': '640px'}}/>
+						</span>
+					</p>
+				</div>
+      </div>
+    );
+  }
+}
+
+BotUI.propTypes = {
+  action: PropTypes.arrayOf(PropTypes.object), // eslint-disable-line react/forbid-prop-types
+  className: PropTypes.string,
+  messages: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onAction: PropTypes.func,
+};
+
+BotUI.defaultProps = {
+  className: '',
+  action: null,
+  onAction: () => {},
+};
+
+export default BotUI;

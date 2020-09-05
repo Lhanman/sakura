@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#000000"/>
+    <meta name="description" content="LhanMan Daily Life"/>
+    <link rel="icon" href="http://static.lhanman.cn/static/images/footer/12.ico"/>
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1831247_bu2957dkumt.css">
+	<link rel="stylesheet" href="http://static.lhanman.cn/static/assets/css/font-awesome-animation.min.css">
+	<script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "https://hm.baidu.com/hm.js?32aa86646e0601fbec1e025f1dc6533c";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+	<script src="https://cdn.jsdelivr.net/vue/latest/vue.min.js"></script>
+
+    <title>Hi,Lhanman!</title>
+</head>
+<body>
+<noscript>You need to enable JavaScript to run this app.</noscript>
+<div id="root"></div>
+<!-- <canvas id="fireworks"></canvas>
+<script type="text/javascript" src="/js/anime.min.js"></script>
+<script type="text/javascript" src="/js/fireworks.js"></script> -->
+<script type="text/javascript" src="/assets/jquery.min.js"></script>
+<script type="text/javascript" src="/assets/autoload.js"></script>
+<script type="text/javascript" src="http://static.lhanman.cn/static/assets/js/activate-power-mode.js"></script>
+<script>
+POWERMODE.colorful = true; // make power mode colorful
+POWERMODE.shake = false; // turn off shake
+document.body.addEventListener('input', POWERMODE);
+</script>
+</body>
+</html>

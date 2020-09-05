@@ -1,0 +1,5 @@
+import {EventEmitter} from "events";
+export const emitter =()=> 
+		{
+			return new EventEmitter();
+		}

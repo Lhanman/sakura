@@ -1,0 +1,229 @@
+import {createGlobalStyle} from 'styled-components';
+
+export const GlobalStyle = createGlobalStyle`
+    ::selection {
+        background: #A0DAD0;
+        color: #fff;
+    }
+    ::-webkit-scrollbar-track {
+        background-color: #ffffff;
+    }
+    ::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background-color: Violet;
+    }
+    ::-webkit-scrollbar {
+        width: 5px;
+        height: 8px;
+        background-color: #B9B9B9;
+    }
+    *{
+        box-sizing: border-box;
+    }
+	@font-face{
+		font-family: Merriweather Sans
+		src : url('../font/MerriweatherSans.woff2');
+	}
+	@font-face {
+    font-family: 'FontAwesome';
+     src: url('../font/fontawesome-webfont.eot?v=4.7.0');
+     src: url('../font/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'), url('../font/fontawesome-webfont.woff2?v=4.7.0') format('woff2'), url('../font/fontawesome-webfont.woff?v=4.7.0') format('woff'), url('../font/fontawesome-webfont.ttf?v=4.7.0') format('truetype'), url('../font/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
+     font-weight: normal;
+     font-style: normal;
+   }
+
+    body{
+       font-family: Merriweather Sans,Helvetica,Tahoma,Arial,'PingFang SC','Hiragino Sans GB','Microsoft Yahei','WenQuanYi Micro Hei',sans-serif;
+        cursor: url(https://static.lhanman.cn/static/assets/sakura/static/media/normal.468b8ee9.cur),auto;
+		text-shadow: 0px 0px 1px rgba(0,0,0,.1);
+    }
+	html, body, div, span, applet, object, iframe,
+	h1, h2, h3, h4, h5, h6, p, blockquote, 
+	a, abbr, acronym, address, big, cite, 
+	del, dfn, em, img, ins, kbd, q, s, samp,
+	small, strike, strong, sub, sup, tt, var,
+	b, u, i, center,
+	dl, dt, dd, ol, ul, li,
+	fieldset, form, label, legend,
+	table, caption, tbody, tfoot, thead, tr, th, td,
+	article, aside, canvas, details, embed, 
+	figure, figcaption, footer, header, hgroup, 
+	menu, nav, output, ruby, section, summary,
+	time, mark, audio, video {
+		margin: 0;
+		padding: 0;
+		border: 0;
+		font-size: 100%;
+		vertical-align: baseline;
+
+
+	}
+	/* HTML5 display-role reset for older browsers */
+	article, aside, details, figcaption, figure, 
+	footer, header, hgroup, menu, nav, section {
+		display: block;
+	}
+	.transition-color{
+	    transition: color .2s ease-out,border .2s ease-out,opacity .2s ease-out;
+	}
+	a{
+        transition: color .2s ease-out,border .2s ease-out,opacity .2s ease-out;
+        cursor: url(https://static.lhanman.cn/static/assets/sakura/static/media/ayuda.4f1cd0e7.cur),auto;
+	}
+	a:hover{
+	    text-decoration: none;
+	}
+	ol, ul {
+		list-style: none;
+	}
+	ul,li{
+	    margin:0;
+	}
+	.lazyload {
+        filter: blur(0px);
+        transition: .3s filter linear,.3s -webkit-filter linear;
+    }
+    p{
+        cursor: url(https://static.lhanman.cn/static/assets/sakura/static/media/texto.68d4b275.cur),auto;
+    }
+	blockquote, q {
+		quotes: none;
+	}
+	blockquote:before, blockquote:after,
+	q:before, q:after {
+		content: '';
+		content: none;
+	}
+	
+	table {
+		border-collapse: collapse;
+		border-spacing: 0;
+	}
+	
+	.flex-items {
+        display: -webkit-flex; /* Safari */
+        -webkit-align-items: center; /* Safari 7.0+ */
+        display: flex;
+        align-items: center;
+    }
+    
+    .flex-start {
+        display: -webkit-flex; /* Safari */
+        -webkit-align-items: center; /* Safari 7.0+ */
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    
+    .cell {
+        -webkit-box-flex: 1;
+        -webkit-flex: 1;
+        -ms-flex: 1;
+        flex: 1;
+        width: 0;
+    }
+    
+    .align-center {
+        -webkit-align-self: center;
+        align-self: center;
+    }
+    
+    .ellipsis {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    
+    .ellipsis-two {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+    }
+    #player .aplayer-lrc-current {
+        color: #fe9600;
+        font-size: 15px;
+        font-weight: bold;
+    }
+	#player .aplayer-body{
+		border-radius: 0 15px 15px 0 !important;
+		left: -66px !important;
+	}
+
+	#player{
+		z-index: 100;
+	}
+
+	#player .aplayer-body:hover {
+		left: 0 !important;
+	}
+	#player .aplayer-miniswitcher{
+		border-radius: 0 15px 15px 0 !important;
+	}
+
+    #fireworks{
+        position: fixed; 
+        left: 0px; 
+        top: 0px; 
+        pointer-events: none; 
+        z-index: 999;
+    }
+
+	#nprogress .bar {
+      background: pink !important; //自定义颜色
+    }
+
+	#nprogress .peg { // 自定义辅助阴影颜色，这里默认为透明
+	  box-shadow: 0 0 10px #00000000, 0 0 5px #00000000 !important; 
+	}
+
+	body::before {
+    content: '';
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    will-change: transform;
+    z-index: -1;
+    background-image: url(https://api.ixiaowai.cn/api/api.php);
+    background-repeat: no-repeat;
+    background-position: top right;
+    background-size: cover;
+    -moz-filter: blur(10px) brightness(.88);
+    -webkit-filter: blur(10px) brightness(.88);
+    -o-filter: blur(10px) brightness(.88);
+    -ms-filter: blur(10px) brightness(.88);
+    filter: blur(10px) brightness(.88);
+}
+
+
+.ant-message-notice-content {
+    margin: auto
+	position: fixed;
+    text-align: center;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 10000
+	box-shadow: none
+	background:none
+}
+
+.ant-message-success{
+
+	background: #fe9600;
+    color: #fff;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    display: inline-block;
+    font-size: 14px;
+    margin-bottom: 0;
+    padding: 12px 25px;
+    z-index: 10000;
+    margin-top: -4px
+}
+
+`;
