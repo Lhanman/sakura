@@ -6,8 +6,7 @@
 
 
 ## 声明
- 
->  本项目，主要宗旨在于，简单、易用、不烧脑的博客，并且基于helloblog，搭建一个属于博主们的博客圈
+
 >> 后端API: [https://github.com/Lhanman/blog-sakura](https://github.com/Lhanman/blog-sakura)<br/>
 >> 前端主题地址: [https://github.com/Lhanman/sakura](https://github.com/Lhanman/sakura)<br/>
 
