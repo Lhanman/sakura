@@ -1,7 +1,7 @@
 
 ## 简介
 
-> sakura 风格，React开发，作者--LhanMan
+> sakura 风格，React开发
 >> API使用 SpringBoot，后台管理使用 Layui-miniAdmin
 
 
